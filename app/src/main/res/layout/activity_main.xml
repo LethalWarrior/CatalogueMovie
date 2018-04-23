@@ -42,11 +42,12 @@
             android:layout_centerHorizontal="true"
             android:indeterminate="true"
             android:visibility="invisible"/>
-        <ListView
-            android:id="@+id/lv_movie"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_movie"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_row_movie"
             android:visibility="invisible">
-        </ListView>
+        </android.support.v7.widget.RecyclerView>
     </RelativeLayout>
 </LinearLayout>

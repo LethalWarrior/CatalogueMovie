@@ -7,6 +7,8 @@ import android.app.LoaderManager;
 import android.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,11 +35,11 @@ import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
-        LoaderManager.LoaderCallbacks<ArrayList<Movie>>, ListView.OnItemClickListener{
+        LoaderManager.LoaderCallbacks<ArrayList<Movie>>{
 
     @BindView(R.id.edt_search_movie) EditText edtSearchMovie;
     @BindView(R.id.btn_search_movie) Button btnSearchMovie;
-    @BindView(R.id.lv_movie) ListView lvMovie;
+    @BindView(R.id.rv_movie) RecyclerView rvMovie;
     @BindView(R.id.pb_load) ProgressBar pb_load;
 
     private MovieAdapter movieAdapter;
@@ -55,8 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         movieAdapter = new MovieAdapter(this);
         movieAdapter.notifyDataSetChanged();
-        lvMovie.setAdapter(movieAdapter);
-        lvMovie.setOnItemClickListener(this);
+        rvMovie.setLayoutManager(new LinearLayoutManager(this));
+        rvMovie.setAdapter(movieAdapter);
 
         btnSearchMovie.setOnClickListener(this);
 
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if(init) {
-        lvMovie.setVisibility(View.INVISIBLE);
+        rvMovie.setVisibility(View.INVISIBLE);
         pb_load.setVisibility(View.VISIBLE);}
         return new MovieLoader(this, query);
     }
@@ -103,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onLoadFinished(Loader<ArrayList<Movie>> loader, ArrayList<Movie> data) {
 
         pb_load.setVisibility(View.INVISIBLE);
-        lvMovie.setVisibility(View.VISIBLE);
+        rvMovie.setVisibility(View.VISIBLE);
         movieAdapter.setMovieList(data);
     }
 
@@ -111,17 +113,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onLoaderReset(Loader<ArrayList<Movie>> loader) {
 
         movieAdapter.setMovieList(null);
-
-    }
-
-    // Implementation for onItemClick Listener from ListView
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-        Movie movie = movieAdapter.getItem(position);
-        Intent detailIntent = new Intent(MainActivity.this, DetailActivity.class);
-        detailIntent.putExtra(EXTRA_MOVIE, movie);
-        startActivityForResult(detailIntent, 0);
 
     }
 }

@@ -2,6 +2,7 @@ package com.lethalizer.robby.cataloguemovie.adapter;
 
 import android.content.Context;
 import android.provider.ContactsContract;
+import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +17,14 @@ import com.lethalizer.robby.cataloguemovie.model.Movie;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by robby on 4/14/18.
  */
 
-public class MovieAdapter extends BaseAdapter {
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
 
     private ArrayList<Movie> movieList = new ArrayList<>();
     private LayoutInflater mInflater;
@@ -28,7 +32,6 @@ public class MovieAdapter extends BaseAdapter {
 
     public MovieAdapter(Context context) {
         this.context = context;
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public void setMovieList(ArrayList<Movie> movieList) {
@@ -36,6 +39,10 @@ public class MovieAdapter extends BaseAdapter {
         this.movieList = movieList;
         notifyDataSetChanged();
 
+    }
+
+    public ArrayList<Movie> getMovieList() {
+        return movieList;
     }
 
     public void addMovie(final Movie movie) {
@@ -51,16 +58,6 @@ public class MovieAdapter extends BaseAdapter {
 
     }
 
-    @Override
-    public int getCount() {
-        if(movieList == null) return 0;
-        return movieList.size();
-    }
-
-    @Override
-    public Movie getItem(int position) {
-        return this.movieList.get(position);
-    }
 
     @Override
     public long getItemId(int position) {
@@ -68,51 +65,48 @@ public class MovieAdapter extends BaseAdapter {
     }
 
     @Override
+    public int getItemCount() {
+        return getMovieList().size();
+    }
+
+    @Override
+    public MovieHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_row_movie, parent, false);
+        return new MovieHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(MovieHolder holder, int position) {
+
+        holder.tvMovieTitle.setText(getMovieList().get(position).getTitle());
+        holder.tvMovieOverview.setText(getMovieList().get(position).getTitle());
+        holder.tvReleaseDateItem.setText(getMovieList().get(position).getReleaseDate());
+
+        Glide.with(context)
+                .load(getMovieList().get(position).getPosterPath())
+                .into(holder.imgMoviePoster);
+
+    }
+
+    @Override
     public int getItemViewType(int position) {
         return 0;
     }
 
-    @Override
-    public int getViewTypeCount() {
-        return 1;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        ViewHolder holder = null;
-        if(convertView == null) {
-
-            holder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.item_row_movie, null);
-            holder.tvMovieTitle = (TextView) convertView.findViewById(R.id.tv_movie_title);
-            holder.tvMovieOverview = (TextView) convertView.findViewById(R.id.tv_movie_overview);
-            holder.tvReleaseDateItem = (TextView) convertView.findViewById(R.id.tv_release_date_item);
-            holder.imgMoviePoster = (ImageView) convertView.findViewById(R.id.img_poster);
-            convertView.setTag(holder);
-
-        } else {
-
-            holder = (ViewHolder) convertView.getTag();
-
-        }
-        holder.tvMovieTitle.setText(movieList.get(position).getTitle());
-        holder.tvMovieOverview.setText(movieList.get(position).getOverview());
-        holder.tvReleaseDateItem.setText(movieList.get(position).getReleaseDate());
-        Glide.with(parent.getContext())
-                .load(movieList.get(position).getPosterPath())
-                .into(holder.imgMoviePoster);
-
-        return convertView;
-    }
 
     //ViewHolder for ListView
-    private static class ViewHolder {
+    class MovieHolder extends RecyclerView.ViewHolder {
 
-        TextView tvMovieTitle;
-        TextView tvMovieOverview;
-        TextView tvReleaseDateItem;
-        ImageView imgMoviePoster;
+        @BindView(R.id.tv_movie_title) TextView tvMovieTitle;
+        @BindView(R.id.tv_movie_overview) TextView tvMovieOverview;
+        @BindView(R.id.tv_release_date_item) TextView tvReleaseDateItem;
+        @BindView(R.id.img_poster) ImageView imgMoviePoster;
 
+
+        public MovieHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
     }
 }
