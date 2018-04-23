@@ -17,12 +17,17 @@ import com.lethalizer.robby.cataloguemovie.model.Movie;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DetailActivity extends AppCompatActivity {
 
-    private TextView tvTitle, tvReleaseDate, tvOverview, tvRating;
-    private ImageView imgDetailPoster;
-    private LinearLayout layoutDetailContent;
-    private ListView lvCast;
+    @BindView(R.id.tv_title) TextView tvTitle;
+    @BindView(R.id.tv_release_date) TextView tvReleaseDate;
+    @BindView(R.id.tv_overview) TextView tvOverview;
+    @BindView(R.id.tv_rating) TextView tvRating;
+    @BindView(R.id.img_detail_poster) ImageView imgDetailPoster;
+    @BindView(R.id.layout_detail_content) LinearLayout layoutDetailContent;
 
     private static final String EXTRA_MOVIE_ID = "extra_movie_id";
 
@@ -33,15 +38,7 @@ public class DetailActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Detail Movie");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        tvTitle = (TextView) findViewById(R.id.tv_title);
-        tvReleaseDate = (TextView) findViewById(R.id.tv_release_date);
-        tvOverview = (TextView) findViewById(R.id.tv_overview);
-        tvRating = (TextView)findViewById(R.id.tv_rating);
-
-        //imgBackdrop = (ImageView) findViewById(R.id.img_backdrop);
-        imgDetailPoster = (ImageView) findViewById(R.id.img_detail_poster);
-
-        layoutDetailContent = (LinearLayout) findViewById(R.id.layout_detail_content);
+        ButterKnife.bind(this);
 
         Movie movie = (Movie) getIntent().getSerializableExtra(MainActivity.EXTRA_MOVIE);
 
@@ -53,9 +50,6 @@ public class DetailActivity extends AppCompatActivity {
         Glide.with(this)
                 .load(movie.getPosterPath())
                 .into(imgDetailPoster);
-        /*Glide.with(this)
-                .load(movie.getBackdropPath())
-                .into(imgBackdrop);*/
 
     }
 

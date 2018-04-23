@@ -28,16 +28,19 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         LoaderManager.LoaderCallbacks<ArrayList<Movie>>, ListView.OnItemClickListener{
 
-    private EditText edtSearchMovie;
-    private Button btnSearchMovie;
-    private ListView lvMovie;
+    @BindView(R.id.edt_search_movie) EditText edtSearchMovie;
+    @BindView(R.id.btn_search_movie) Button btnSearchMovie;
+    @BindView(R.id.lv_movie) ListView lvMovie;
+    @BindView(R.id.pb_load) ProgressBar pb_load;
+
     private MovieAdapter movieAdapter;
-    private ProgressBar pb_load;
     private boolean init = false;
 
     private static final String EXTRA_QUERY = "extra_query";
@@ -48,10 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        edtSearchMovie = (EditText) findViewById(R.id.edt_search_movie);
-        btnSearchMovie = (Button) findViewById(R.id.btn_search_movie);
-        lvMovie = (ListView) findViewById(R.id.lv_movie);
-        pb_load = (ProgressBar) findViewById(R.id.pb_load);
+        ButterKnife.bind(this);
 
         movieAdapter = new MovieAdapter(this);
         movieAdapter.notifyDataSetChanged();
