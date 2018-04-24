@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.lethalizer.robby.cataloguemovie.R;
 import com.lethalizer.robby.cataloguemovie.adapter.MovieAdapter;
+import com.lethalizer.robby.cataloguemovie.etc.ItemClickSupport;
 import com.lethalizer.robby.cataloguemovie.etc.MovieLoader;
 import com.lethalizer.robby.cataloguemovie.model.Movie;
 import com.loopj.android.http.AsyncHttpClient;
@@ -69,6 +70,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getLoaderManager().initLoader(0, bundle, this);
         init = true;
 
+        ItemClickSupport.addTo(rvMovie).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+
+                Movie movie = movieAdapter.getMovieList().get(position);
+                Intent detailIntent = new Intent(MainActivity.this, DetailActivity.class);
+                detailIntent.putExtra(EXTRA_MOVIE, movie);
+                startActivityForResult(detailIntent, 0);
+
+            }
+        });
+
     }
 
     @Override
@@ -115,4 +128,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         movieAdapter.setMovieList(null);
 
     }
+
 }
