@@ -3,6 +3,7 @@ package com.lethalizer.robby.cataloguemovie.etc;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 
+import com.lethalizer.robby.cataloguemovie.BuildConfig;
 import com.lethalizer.robby.cataloguemovie.model.Movie;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.SyncHttpClient;

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="250dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginLeft="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin">
+        <ImageView
+            android:id="@+id/img_poster"
+            android:layout_width="180dp"
+            android:layout_height="250dp"
+            android:layout_centerVertical="true"
+            tools:src="@color/colorAccent"
+            android:contentDescription="@string/the_movie_s_poster"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/img_poster"
+            android:padding="8dp">
+            <TextView
+                android:id="@+id/tv_movie_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Moana"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_marginBottom="8dp"/>
+            <TextView
+                android:id="@+id/tv_movie_overview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+                android:textSize="14sp"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:layout_marginBottom="8dp"/>
+            <TextView
+                android:id="@+id/tv_release_date_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Wednesday, Nov 23, 2016"
+                android:textSize="16sp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_marginBottom="8dp"/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/img_poster"
+            android:text="@string/detail"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

@@ -1,13 +1,10 @@
 package com.lethalizer.robby.cataloguemovie.adapter;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,13 +21,12 @@ import butterknife.ButterKnife;
  * Created by robby on 4/14/18.
  */
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
+public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.MovieHolder> {
 
     private ArrayList<Movie> movieList = new ArrayList<>();
-    private LayoutInflater mInflater;
     private Context context;
 
-    public MovieAdapter(Context context) {
+    public SearchMovieAdapter(Context context) {
         this.context = context;
     }
 
@@ -80,18 +76,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     public void onBindViewHolder(MovieHolder holder, int position) {
 
         holder.tvMovieTitle.setText(getMovieList().get(position).getTitle());
-        holder.tvMovieOverview.setText(getMovieList().get(position).getTitle());
+        holder.tvMovieOverview.setText(getMovieList().get(position).getOverview());
         holder.tvReleaseDateItem.setText(getMovieList().get(position).getReleaseDate());
 
         Glide.with(context)
                 .load(getMovieList().get(position).getPosterPath())
                 .into(holder.imgMoviePoster);
 
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return 0;
     }
 
 

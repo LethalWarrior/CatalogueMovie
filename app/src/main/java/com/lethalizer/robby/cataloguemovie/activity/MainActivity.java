@@ -1,8 +1,6 @@
 package com.lethalizer.robby.cataloguemovie.activity;
 
-import android.accessibilityservice.GestureDescription;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.app.LoaderManager;
 import android.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -11,29 +9,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.lethalizer.robby.cataloguemovie.R;
-import com.lethalizer.robby.cataloguemovie.adapter.MovieAdapter;
+import com.lethalizer.robby.cataloguemovie.adapter.SearchMovieAdapter;
 import com.lethalizer.robby.cataloguemovie.etc.ItemClickSupport;
 import com.lethalizer.robby.cataloguemovie.etc.MovieLoader;
 import com.lethalizer.robby.cataloguemovie.model.Movie;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         LoaderManager.LoaderCallbacks<ArrayList<Movie>>{
@@ -43,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.rv_movie) RecyclerView rvMovie;
     @BindView(R.id.pb_load) ProgressBar pb_load;
 
-    private MovieAdapter movieAdapter;
+    private SearchMovieAdapter searchMovieAdapter;
     private boolean init = false;
 
     private static final String EXTRA_QUERY = "extra_query";
@@ -56,10 +45,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ButterKnife.bind(this);
 
-        movieAdapter = new MovieAdapter(this);
-        movieAdapter.notifyDataSetChanged();
+        searchMovieAdapter = new SearchMovieAdapter(this);
+        searchMovieAdapter.notifyDataSetChanged();
         rvMovie.setLayoutManager(new LinearLayoutManager(this));
-        rvMovie.setAdapter(movieAdapter);
+        rvMovie.setAdapter(searchMovieAdapter);
 
         btnSearchMovie.setOnClickListener(this);
 
@@ -74,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
 
-                Movie movie = movieAdapter.getMovieList().get(position);
+                Movie movie = searchMovieAdapter.getMovieList().get(position);
                 Intent detailIntent = new Intent(MainActivity.this, DetailActivity.class);
                 detailIntent.putExtra(EXTRA_MOVIE, movie);
                 startActivityForResult(detailIntent, 0);
@@ -119,13 +108,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         pb_load.setVisibility(View.INVISIBLE);
         rvMovie.setVisibility(View.VISIBLE);
-        movieAdapter.setMovieList(data);
+        searchMovieAdapter.setMovieList(data);
     }
 
     @Override
     public void onLoaderReset(Loader<ArrayList<Movie>> loader) {
 
-        movieAdapter.setMovieList(null);
+        searchMovieAdapter.setMovieList(null);
 
     }
 
