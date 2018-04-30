@@ -41,12 +41,13 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:indeterminate="true"
-            tools:visibility="invisible"/>
+            android:visibility="invisible"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_movie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/item_row_movie">
+            tools:listitem="@layout/item_row_movie"
+            android:visibility="invisible">
         </android.support.v7.widget.RecyclerView>
     </RelativeLayout>
 

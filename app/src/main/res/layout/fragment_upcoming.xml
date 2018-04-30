@@ -14,6 +14,7 @@
         android:layout_height="100dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:indeterminate="true"
         tools:visibility="invisible"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_movie"

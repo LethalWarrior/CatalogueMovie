@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
 public class ShowMovieAdapter extends RecyclerView.Adapter<ShowMovieAdapter.ViewHolder> {
 
     private ArrayList<Movie> movieList = new ArrayList<Movie>();
+    private int viewHolderLayout;
     private Context context;
 
     public ShowMovieAdapter(Context context) {
@@ -53,10 +54,14 @@ public class ShowMovieAdapter extends RecyclerView.Adapter<ShowMovieAdapter.View
 
     }
 
+    public void setViewHolderLayout(int viewHolderLayout) {
+        this.viewHolderLayout = viewHolderLayout;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_card_now_playing, parent, false);
+                .inflate(viewHolderLayout, parent, false);
         return new ViewHolder(view);
     }
 
@@ -64,14 +69,16 @@ public class ShowMovieAdapter extends RecyclerView.Adapter<ShowMovieAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.tvTitle.setText(getMovieList().get(position).getTitle());
-        holder.tvOverview.setText(getMovieList().get(position).getTitle());
-        holder.tvReleaseDate.setText(getMovieList().get(position).getTitle());
+        holder.tvOverview.setText(getMovieList().get(position).getOverview());
+        holder.tvReleaseDate.setText(getMovieList().get(position).getReleaseDate());
 
         Glide.with(context)
                 .load(getMovieList().get(position).getPosterPath())
                 .into(holder.imgPoster);
 
     }
+
+
 
     @Override
     public long getItemId(int position) {

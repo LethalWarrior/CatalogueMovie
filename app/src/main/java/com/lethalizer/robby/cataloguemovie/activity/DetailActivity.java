@@ -29,8 +29,6 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.img_detail_poster) ImageView imgDetailPoster;
     @BindView(R.id.layout_detail_content) LinearLayout layoutDetailContent;
 
-    private static final String EXTRA_MOVIE_ID = "extra_movie_id";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +38,7 @@ public class DetailActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        Movie movie = (Movie) getIntent().getSerializableExtra(MainActivity.EXTRA_MOVIE);
+        Movie movie = (Movie) getIntent().getSerializableExtra("extra_movie");
 
         tvTitle.setText(movie.getTitle());
         tvOverview.setText(movie.getOverview());

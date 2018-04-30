@@ -1,8 +1,10 @@
 package com.lethalizer.robby.cataloguemovie.etc;
 
-import android.content.AsyncTaskLoader;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
 import android.content.Context;
 
+import com.bumptech.glide.load.model.stream.StreamUriLoader;
 import com.lethalizer.robby.cataloguemovie.BuildConfig;
 import com.lethalizer.robby.cataloguemovie.model.Movie;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -21,18 +23,18 @@ import cz.msebera.android.httpclient.Header;
 
 public class MovieLoader extends AsyncTaskLoader<ArrayList<Movie>> {
 
-    private static final String API_KEY = "cd4a9bb196e603f0586b617cb18f78a3";
+    private final String API_KEY = "cd4a9bb196e603f0586b617cb18f78a3";
     private String query;
     private ArrayList<Movie> movies;
     private Boolean hasResult = false;
+    private MovieLoaderType loaderType;
 
-    public MovieLoader(final Context context, String query) {
+    public MovieLoader(final Context context, MovieLoaderType loaderType, String query) {
         super(context);
-
         onContentChanged();
+        this.loaderType = loaderType;
         this.query = query;
     }
-
 
     @Override
     public ArrayList<Movie> loadInBackground() {
@@ -40,8 +42,7 @@ public class MovieLoader extends AsyncTaskLoader<ArrayList<Movie>> {
         SyncHttpClient client = new SyncHttpClient();
 
         final ArrayList<Movie> movies = new ArrayList<>();
-        String url = "https://api.themoviedb.org/3/search/movie?" +
-                "api_key="+API_KEY+"&query="+query.replace(" ", "%20");
+        String url = getUrl();
 
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
@@ -82,6 +83,30 @@ public class MovieLoader extends AsyncTaskLoader<ArrayList<Movie>> {
         });
 
         return movies;
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
+    private String getUrl() {
+        switch (loaderType) {
+            case SEARCH_MOVIE:
+                return "https://api.themoviedb.org/3/search/movie?" +
+                        "api_key="+API_KEY+"&query="+query.replace(" ", "%20");
+            case NOW_PLAYING_MOVIE:
+                return "https://api.themoviedb.org/3/movie/now_playing?" +
+                        "api_key="+API_KEY;
+            case UPCOMING_MOVIE:
+                return "https://api.themoviedb.org/3/movie/upcoming?" +
+                        "api_key="+API_KEY;
+            default:
+                return null;
+        }
     }
 
     @Override
