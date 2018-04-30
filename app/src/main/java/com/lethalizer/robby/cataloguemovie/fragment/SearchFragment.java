@@ -20,7 +20,6 @@ import android.widget.ProgressBar;
 import com.lethalizer.robby.cataloguemovie.R;
 import com.lethalizer.robby.cataloguemovie.activity.DetailActivity;
 import com.lethalizer.robby.cataloguemovie.adapter.SearchMovieAdapter;
-import com.lethalizer.robby.cataloguemovie.etc.ItemClickSupport;
 import com.lethalizer.robby.cataloguemovie.etc.MovieLoader;
 import com.lethalizer.robby.cataloguemovie.etc.MovieLoaderType;
 import com.lethalizer.robby.cataloguemovie.model.Movie;
@@ -75,8 +74,20 @@ public class SearchFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        SearchMovieAdapter.RecyclerViewItemClickListener listener = new SearchMovieAdapter.RecyclerViewItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Movie movie = searchMovieAdapter.getMovieList().get(position);
+                Intent detailIntent = new Intent(getContext(), DetailActivity.class);
+                detailIntent.putExtra(EXTRA_MOVIE, movie);
+                startActivityForResult(detailIntent, 0);
+            }
+        };
+
         searchMovieAdapter = new SearchMovieAdapter(getContext());
         searchMovieAdapter.notifyDataSetChanged();
+        searchMovieAdapter.setListener(listener);
         rvMovie.setLayoutManager(new LinearLayoutManager(getContext()));
         rvMovie.setAdapter(searchMovieAdapter);
 
@@ -108,18 +119,6 @@ public class SearchFragment extends Fragment implements LoaderManager.LoaderCall
 
         searchMovieAdapter.setMovieList(data);
         searchMovieAdapter.notifyDataSetChanged();
-        if(searchMovieAdapter.getItemCount() != 0) {
-            ItemClickSupport.addTo(rvMovie)
-                    .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-                        @Override
-                        public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                            Movie movie = searchMovieAdapter.getMovieList().get(position);
-                            Intent detailIntent = new Intent(getContext(), DetailActivity.class);
-                            detailIntent.putExtra(EXTRA_MOVIE, movie);
-                            startActivityForResult(detailIntent, 0);
-                        }
-                    });
-        }
     }
 
     @Override

@@ -28,6 +28,7 @@ public class ShowMovieAdapter extends RecyclerView.Adapter<ShowMovieAdapter.View
     private ArrayList<Movie> movieList = new ArrayList<Movie>();
     private int viewHolderLayout;
     private Context context;
+    private ViewHolderItemClickListener listener;
 
     public ShowMovieAdapter(Context context) {
         this.context = context;
@@ -58,11 +59,19 @@ public class ShowMovieAdapter extends RecyclerView.Adapter<ShowMovieAdapter.View
         this.viewHolderLayout = viewHolderLayout;
     }
 
+    public ViewHolderItemClickListener getListener() {
+        return listener;
+    }
+
+    public void setListener(ViewHolderItemClickListener listener) {
+        this.listener = listener;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(viewHolderLayout, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, listener);
     }
 
     @Override
@@ -90,7 +99,9 @@ public class ShowMovieAdapter extends RecyclerView.Adapter<ShowMovieAdapter.View
         return movieList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        private ViewHolderItemClickListener listener;
 
         @BindView(R.id.img_poster)
         ImageView imgPoster;
@@ -107,11 +118,21 @@ public class ShowMovieAdapter extends RecyclerView.Adapter<ShowMovieAdapter.View
         @BindView(R.id.btn_detail)
         Button btnDetail;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, ViewHolderItemClickListener listener) {
             super(itemView);
 
+            this.listener = listener;
             ButterKnife.bind(this, itemView);
+            btnDetail.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            listener.onClick(v, getAdapterPosition());
         }
     }
 
+    public interface ViewHolderItemClickListener {
+        void onClick(View view, int position);
+    }
 }

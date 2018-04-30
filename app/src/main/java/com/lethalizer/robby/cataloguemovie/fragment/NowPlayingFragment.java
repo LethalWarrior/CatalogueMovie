@@ -1,6 +1,7 @@
 package com.lethalizer.robby.cataloguemovie.fragment;
 
 
+import android.content.Intent;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.lethalizer.robby.cataloguemovie.R;
+import com.lethalizer.robby.cataloguemovie.activity.DetailActivity;
 import com.lethalizer.robby.cataloguemovie.adapter.ShowMovieAdapter;
 import com.lethalizer.robby.cataloguemovie.etc.MovieLoader;
 import com.lethalizer.robby.cataloguemovie.etc.MovieLoaderType;
@@ -38,6 +40,7 @@ public class NowPlayingFragment extends Fragment implements LoaderManager.Loader
     RecyclerView rvMovie;
 
     private ShowMovieAdapter showMovieAdapter;
+    public static final String EXTRA_MOVIE = "extra_movie";
 
     public NowPlayingFragment() {
         // Required empty public constructor
@@ -58,9 +61,22 @@ public class NowPlayingFragment extends Fragment implements LoaderManager.Loader
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ShowMovieAdapter.ViewHolderItemClickListener listener = new ShowMovieAdapter.ViewHolderItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Movie movie = showMovieAdapter.getMovieList().get(position);
+                Intent detailIntent = new Intent(getContext(), DetailActivity.class);
+                detailIntent.putExtra(EXTRA_MOVIE, movie);
+                startActivityForResult(detailIntent, 0);
+            }
+        };
+
         showMovieAdapter = new ShowMovieAdapter(getContext());
         showMovieAdapter.setViewHolderLayout(R.layout.item_card_now_playing);
+        showMovieAdapter.setListener(listener);
         rvMovie.setLayoutManager(new LinearLayoutManager(getContext()));
+
         rvMovie.setAdapter(showMovieAdapter);
         getLoaderManager().initLoader(0, null, this);
     }
