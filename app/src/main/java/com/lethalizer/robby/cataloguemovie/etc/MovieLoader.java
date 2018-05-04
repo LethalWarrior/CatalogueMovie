@@ -98,10 +98,10 @@ public class MovieLoader extends AsyncTaskLoader<ArrayList<Movie>> {
                         "api_key="+BuildConfig.MOVIE_DB_API_KEY+"&query="+query.replace(" ", "%20");
             case NOW_PLAYING_MOVIE:
                 return "https://api.themoviedb.org/3/movie/now_playing?" +
-                        "api_key="+BuildConfig.MOVIE_DB_API_KEY;
+                        "api_key="+BuildConfig.MOVIE_DB_API_KEY+"&region=US&with_release_type=2|3";
             case UPCOMING_MOVIE:
                 return "https://api.themoviedb.org/3/movie/upcoming?" +
-                        "api_key="+BuildConfig.MOVIE_DB_API_KEY;
+                        "api_key="+BuildConfig.MOVIE_DB_API_KEY+"&region=US&with_release_type=2|3";
             default:
                 return null;
         }
