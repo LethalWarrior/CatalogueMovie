@@ -1,11 +1,10 @@
 package com.lethalizer.robby.cataloguemovie.etc;
 
-import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.content.Context;
 
-import com.bumptech.glide.load.model.stream.StreamUriLoader;
 import com.lethalizer.robby.cataloguemovie.BuildConfig;
+import com.lethalizer.robby.cataloguemovie.R;
 import com.lethalizer.robby.cataloguemovie.model.Movie;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.SyncHttpClient;
@@ -23,7 +22,6 @@ import cz.msebera.android.httpclient.Header;
 
 public class MovieLoader extends AsyncTaskLoader<ArrayList<Movie>> {
 
-    private final String API_KEY = "cd4a9bb196e603f0586b617cb18f78a3";
     private String query;
     private ArrayList<Movie> movies;
     private Boolean hasResult = false;
@@ -97,13 +95,13 @@ public class MovieLoader extends AsyncTaskLoader<ArrayList<Movie>> {
         switch (loaderType) {
             case SEARCH_MOVIE:
                 return "https://api.themoviedb.org/3/search/movie?" +
-                        "api_key="+API_KEY+"&query="+query.replace(" ", "%20");
+                        "api_key="+BuildConfig.MOVIE_DB_API_KEY+"&query="+query.replace(" ", "%20");
             case NOW_PLAYING_MOVIE:
                 return "https://api.themoviedb.org/3/movie/now_playing?" +
-                        "api_key="+API_KEY;
+                        "api_key="+BuildConfig.MOVIE_DB_API_KEY;
             case UPCOMING_MOVIE:
                 return "https://api.themoviedb.org/3/movie/upcoming?" +
-                        "api_key="+API_KEY;
+                        "api_key="+BuildConfig.MOVIE_DB_API_KEY;
             default:
                 return null;
         }

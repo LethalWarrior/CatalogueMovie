@@ -50,6 +50,7 @@ public class SearchFragment extends Fragment implements LoaderManager.LoaderCall
     private SearchMovieAdapter searchMovieAdapter;
     private boolean init = false;
 
+
     private static final String EXTRA_QUERY = "extra_query";
     public static final String EXTRA_MOVIE = "extra_movie";
 
@@ -138,4 +139,5 @@ public class SearchFragment extends Fragment implements LoaderManager.LoaderCall
             getLoaderManager().restartLoader(0, bundle, this);
         }
     }
+
 }

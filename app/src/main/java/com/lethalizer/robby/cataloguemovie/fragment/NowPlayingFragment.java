@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.lethalizer.robby.cataloguemovie.R;
 import com.lethalizer.robby.cataloguemovie.activity.DetailActivity;
@@ -50,6 +49,7 @@ public class NowPlayingFragment extends Fragment implements LoaderManager.Loader
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_now_playing, container, false);
 
@@ -100,4 +100,5 @@ public class NowPlayingFragment extends Fragment implements LoaderManager.Loader
     public void onLoaderReset(Loader<ArrayList<Movie>> loader) {
         showMovieAdapter.setMovieList(null);
     }
+
 }

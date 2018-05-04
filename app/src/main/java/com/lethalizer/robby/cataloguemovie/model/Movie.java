@@ -1,23 +1,15 @@
 package com.lethalizer.robby.cataloguemovie.model;
 
-import android.content.AsyncTaskLoader;
-import android.os.Parcelable;
+import android.content.SharedPreferences;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
-import org.json.JSONArray;
+import com.lethalizer.robby.cataloguemovie.activity.MainActivity;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.lang.reflect.GenericArrayType;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
-import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by robby on 4/13/18.
@@ -84,8 +76,11 @@ public class Movie implements Serializable{
 
     private String formatDate(String dateString) {
 
+        SharedPreferences preferences = MainActivity.getPreferences();
+        String lang = preferences.getString("My_Lang", "");
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat targetFormat = new SimpleDateFormat("EEEE, dd MMM, yyyy");
+        SimpleDateFormat targetFormat = new SimpleDateFormat("EEEE, dd MMM, yyyy", new Locale(lang));
         Date date = new Date();
         try {
 

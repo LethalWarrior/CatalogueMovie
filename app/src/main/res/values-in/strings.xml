@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Catalogue Movie</string>
+    <string name="btn_detail_text">Detil</string>
+    <string name="btn_search_text">Cari Film</string>
+    <string name="first_main_tab">Sedang Diputar</string>
+    <string name="second_main_tab">Film Mendatang</string>
+    <string name="third_main_tab">Cari Film</string>
+    <string name="edt_search_hint">Nama Film</string>
+    <string name="detail_tab_title">Detail Film</string>
+    <string name="detail_overview_section">Ikhtisar</string>
+    <string name="menu_lang_setting">Bahasa</string>
+    <string name="title_dialog_lang_setting">Pilih Bahasa</string>
+</resources>

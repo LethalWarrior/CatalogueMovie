@@ -4,9 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.lethalizer.robby.cataloguemovie.fragment.NowPlayingFragment;
-import com.lethalizer.robby.cataloguemovie.fragment.SearchFragment;
-import com.lethalizer.robby.cataloguemovie.fragment.UpcomingFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +36,12 @@ public class TabFragmentAdapter extends FragmentPagerAdapter {
         return fragmentList.size();
     }
 
-    public void addFragment(Fragment fragment, String string) {
+    public void addFragment(Fragment fragment, String title) {
         fragmentList.add(fragment);
-        titleList.add(string);
+        titleList.add(title);
+    }
+
+    public List<Fragment> getFragmentList() {
+        return fragmentList;
     }
 }

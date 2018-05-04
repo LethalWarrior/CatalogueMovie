@@ -87,8 +87,6 @@ public class ShowMovieAdapter extends RecyclerView.Adapter<ShowMovieAdapter.View
 
     }
 
-
-
     @Override
     public long getItemId(int position) {
         return position;
